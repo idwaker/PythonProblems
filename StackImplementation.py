@@ -10,7 +10,7 @@ class Stack():
 	
     def push(self, item):
         self.items.append(item)
-            return self.items
+        return self.items
 	
     def pop(self):
         return self.items.pop()
