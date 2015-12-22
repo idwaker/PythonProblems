@@ -3,84 +3,79 @@
 # @totallygloria
 
 
-class Stack():
-	
+class Stack:
     def __init__(self):
         self.items = []
-	
+
     def push(self, item):
         self.items.append(item)
         return self.items
-	
+
     def pop(self):
         return self.items.pop()
-		
+
     def peek(self):
         return self.items[-1]
-		
-    def isEmpty(self):
+
+    def is_empty(self):
         return len(self.items) == 0
-		
+
     def size(self):
         return len(self.items)
 
 
-def rev_string(inputString):
-	
+def rev_string(input_string):
     stack = Stack()
     new_string = str()
-	
-    for char in inputString:
+
+    for char in input_string:
         stack.push(char)
-	
-    while not stack.isEmpty():
+
+    while not stack.is_empty():
         new_string += stack.pop()
-    return new_string	
+    return new_string
 
 
 def paren_checker(string):
-	
     stack = Stack()
-	
+
     for char in string:
         if char == '(':
             stack.push(char)
         elif char == ')':
-            if not stack.isEmpty():
+            if not stack.is_empty():
                 stack.pop()
             else:
                 return 'Unbalanced'
-	
-    if not stack.isEmpty():
+
+    if not stack.is_empty():
         return 'Unbalanced'
     else:
         return 'Balanced'
 
 
 def general_checker(string):
-	
     stack = Stack()
     opens = '([{<'
     closes = ')]}>'
-	
+
     for char in string:
         if char in opens:
             stack.push(char)
         elif char in closes:
-            if stack.isEmpty():
+            if stack.is_empty():
                 return "Stack prematurely empty. Unbalanced."
             else:
                 prior = stack.pop()
-                return match_checker(char,prior) #returns Balanced or Unbalanced
-    if stack.isEmpty():
+                return match_checker(char, prior)  # returns Balanced or Unbalanced
+    if stack.is_empty():
         return 'Balanced'
     else:
         return 'Unbalanced'
 
 
-def match_checker(char,prior):	
-	
-    matches = [('(', ')'),('[', ']'),('{', '}'),('<', '>')]
+def match_checker(char, prior):
+    matches = [('(', ')'), ('[', ']'), ('{', '}'), ('<', '>')]
     for opening, closing in matches:
         if char == closing and prior == opening:
             return "Balanced."
@@ -88,15 +83,14 @@ def match_checker(char,prior):
 
 
 def int_to_bin(value):
-	
     stack = Stack()
     num = int(value)
     binary_num = ''
-	
+
     while num > 0:
         stack.push(num % 2)
-        num = num // 2
-    while not stack.isEmpty():
+        num //= 2
+    while not stack.is_empty():
         binary_num += str(stack.pop())
     return binary_num
 
