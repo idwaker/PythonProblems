@@ -68,23 +68,26 @@ def general_checker(string):
 		if char in opens:
 			stack.push(char)
 		elif char in closes:
-			if stack.isEmpty() == False:
-				prior = stack.pop()
-				if char == ')' and prior != '(':
-					return 'Unbalanced'
-				if char == ']'and prior != '[':
-					return 'Unbalanced'
-				if char == '}'and prior != '{':
-					return 'Unbalanced'
-				if char == '>'and prior != '<':
-					return 'Unbalanced'
+			if stack.isEmpty():
+				return "Stack prematurely empty. Unbalanced."
 			else:
-				return "Stack is prematurely empty. Unbalanced"
-	
+				prior = stack.pop()
+				return match_checker(char,prior) #returns Balanced or Unbalanced
+				
+				
 	if stack.isEmpty():
 		return 'Balanced'
 	else:
-		return 'Unalanced'
+		return 'Unbalanced'
+
+
+def match_checker(char,prior):	
+	
+	matches = [('(', ')'),('[', ']'),('{', '}'),('<', '>')]
+	for opening, closing in matches:
+		if char == closing and prior == opening:
+			return "Balanced."
+	return "Unbalanced."
 
 
 def int_to_bin(value):
