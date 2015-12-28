@@ -17,8 +17,8 @@ class Stack:
     def peek(self):
         return self.items[-1]
 
-    def is_empty(self):
-        return len(self.items) == 0
+    def contains_items(self):
+        return len(self.items) > 0
 
     def size(self):
         return len(self.items)
@@ -31,7 +31,7 @@ def rev_string(input_string):
     for char in input_string:
         stack.push(char)
 
-    while not stack.is_empty():
+    while stack.contains_items():
         new_string += stack.pop()
     return new_string
 
@@ -43,12 +43,12 @@ def paren_checker(string):
         if char == '(':
             stack.push(char)
         elif char == ')':
-            if not stack.is_empty():
+            if stack.contains_items():
                 stack.pop()
             else:
                 return 'Unbalanced'
 
-    if not stack.is_empty():
+    if stack.contains_items():
         return 'Unbalanced'
     else:
         return 'Balanced'
@@ -63,15 +63,15 @@ def general_checker(string):
         if char in opens:
             stack.push(char)
         elif char in closes:
-            if stack.is_empty():
+            if not stack.contains_items():
                 return "Stack prematurely empty. Unbalanced."
             else:
                 prior = stack.pop()
                 return match_checker(char, prior)  # returns Balanced or Unbalanced
-    if stack.is_empty():
-        return 'Balanced'
-    else:
+    if stack.contains_items():
         return 'Unbalanced'
+    else:
+        return 'Balanced'
 
 
 def match_checker(char, prior):
@@ -90,12 +90,33 @@ def int_to_bin(value):
     while num > 0:
         stack.push(num % 2)
         num //= 2
-    while not stack.is_empty():
+    while stack.contains_items():
         binary_num += str(stack.pop())
     return binary_num
 
 
+'''
 if int_to_bin(233) == '11101001':
     print "233 equals", int_to_bin(233)
 else:
     print "Doesn't work."
+'''
+
+
+def base_converter():
+    stack = Stack()
+    digits = '0123456789ABCDEF'
+    num = int(raw_input('Enter a number to convert: '))
+    base = int(raw_input('Enter a base to convert to: '))
+    new_num = ''
+
+    while num > 0:
+        stack.push(num % base)
+        num //= base
+
+    while stack.contains_items():
+        new_num += str(digits[stack.pop()])
+    return new_num
+
+
+base_converter()
