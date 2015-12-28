@@ -40,3 +40,10 @@ def general_checker(string):
         return 'Unbalanced'
     else:
         return 'Balanced'
+
+def match_checker(char, prior):
+    matches = [('(', ')'), ('[', ']'), ('{', '}'), ('<', '>')]
+    for opening, closing in matches:
+        if char == closing and prior == opening:
+            return "Balanced."
+    return "Unbalanced."
