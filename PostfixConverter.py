@@ -31,8 +31,19 @@ def postfix_converter(infixstring):
     while op_stack.contains_items():
         output_list.append(op_stack.pop())
 
-    return output_list
+    return " ".join(output_list)
 
 
-print postfix_converter('( A + B ) * ( C + D )')
-print postfix_converter('A * B + C * D')
+def test_cases():
+
+    if postfix_converter('A * B + C * D') == 'A B * C D * +':
+        print "Check one pass"
+    if postfix_converter('( A + B ) * C - ( D - E ) * ( F + G )') == 'A B + C * D E - F G + * -':
+        print "Check two pass"
+    if postfix_converter('( A + B ) * ( C + D )') == 'A B + C D + *':
+        print "Check three pass"
+    if postfix_converter('A * B + C * D') == 'A B * C D * +':
+        print "Check four pass"
+
+
+test_cases()
