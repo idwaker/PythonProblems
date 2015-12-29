@@ -1,5 +1,5 @@
 # Algorithms & Data Structures: Implementing a Stack
-# 12.28.15
+# 12.29.15
 # @totallygloria
 
 from StackClass import Stack
@@ -46,4 +46,34 @@ def test_cases():
         print "Check four pass"
 
 
-test_cases()
+def postfix_evaluator(statement):
+    operands_stack = Stack()
+    statement_list = statement.split(' ')
+    operators = '*/+-'
+
+
+    for char in statement_list:
+        if char in operators and operands_stack.size() >= 2:
+            b = operands_stack.pop()
+            a = operands_stack.pop()
+            if char == '*':
+                operands_stack.push(a * b)
+            elif char == '/':
+                operands_stack.push(a / b)
+            elif char == '+':
+                operands_stack.push(a + b)
+            elif char == '-':
+                operands_stack.push(a - b)
+        else:
+            operands_stack.push(int(char))
+
+    return operands_stack.pop()
+
+
+def postfix_tests():
+
+    print postfix_evaluator('17 10 + 3 * 9 /')
+    print postfix_evaluator('7 8 + 3 2 + /')
+
+
+postfix_tests()
