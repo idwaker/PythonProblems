@@ -49,23 +49,16 @@ def test_cases():
 def postfix_evaluator(statement):
     operands_stack = Stack()
     statement_list = statement.split(' ')
-    operators = '*/+-'
-
+    operators_dict = {'*': operator.mul, '/': operator.div,
+                      '+': operator.add, '-': operator.sub}
 
     for char in statement_list:
-        if char in operators and operands_stack.size() >= 2:
+        if char in operators_dict and operands_stack.size() >= 2:
             b = operands_stack.pop()
             a = operands_stack.pop()
-            if char == '*':
-                operands_stack.push(a * b)
-            elif char == '/':
-                operands_stack.push(a / b)
-            elif char == '+':
-                operands_stack.push(a + b)
-            elif char == '-':
-                operands_stack.push(a - b)
+            operands_stack.push(operators_dict[char](a,b))
         else:
-            operands_stack.push(int(char))
+            operands_stack.push(float(char))
 
     return operands_stack.pop()
 
